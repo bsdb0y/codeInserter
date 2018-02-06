@@ -20,7 +20,7 @@ check()
 }
 
 check # To check command line args
-echo $DATATYPE
+#echo $DATATYPE #for debugging purpose
 LINENO=($(cat -n "$FILEN" |grep -no "$DATATYPE$"|awk -F':' '{print $1}'))
 
 sedder()
