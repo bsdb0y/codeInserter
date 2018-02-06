@@ -2,10 +2,26 @@
 
 STR=$1 #string to insert
 FILEN=$2 # filename in which insertion take place
+DATATYPE=$3 #Which type of functions i.e void or int or both
 c=0
+ARGS=$#
 declare -a LINENO
+check()
+{
+	USAGE="USAGE: $(basename $0) <string to insert> <filename> <function datatype: int/void/both>"
+	if [ $ARGS -ne "3" ];then
+		echo $USAGE
+		exit
+	fi
+	
+	if [ $DATATYPE == "both" ];then
+		DATATYPE="int$\|void"
+	fi	
+}
 
-LINENO=($(cat -n "$FILEN" |grep -no "int$\|void$"|awk -F':' '{print $1}'))
+check # To check command line args
+echo $DATATYPE
+LINENO=($(cat -n "$FILEN" |grep -no "$DATATYPE$"|awk -F':' '{print $1}'))
 
 sedder()
 {
